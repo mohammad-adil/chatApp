@@ -16,9 +16,11 @@ app.use(express.static(pubDirectory)
 
 )
 
-
-io.on('connection', () => {
-    console.log('socket Io connected')
+let count = 0
+io.on('connection', (socket) => {
+    let message = ' Welcome to the Chat App'
+    io.emit('message', message)
+    console.log('Server' + socket.id);
 })
 
 
