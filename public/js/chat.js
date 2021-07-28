@@ -8,15 +8,19 @@ const messageFormButton = messageForm.querySelector("button");
 const messages = document.querySelector("#messages");
 
 ///template
-
 const messageTemplate = document.querySelector("#message-template").innerHTML;
 const locationMessageTemplate = document.querySelector(
   "#location-message-template"
 ).innerHTML;
 
+///options
+
+const { username, room } = Qs.parse(location.search, {
+  ignoreQueryPrefix: true,
+});
+
 socket.on("message", (message) => {
   console.log(message);
-
   const html = Mustache.render(messageTemplate, {
     message: message.text,
     createdAt: moment(message.createdAt).format("hh:mm a"),
@@ -70,3 +74,5 @@ locationButton.addEventListener("click", () => {
     );
   });
 });
+
+socket.emit("join", { username, room });
